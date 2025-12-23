@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research_Team</title>
+<style>
+body{margin:0;padding:0;background:#0a0a0a;font-family:monospace;color:#00ff00;display:flex;justify-content:center;align-items:center;height:100vh;flex-direction:column;overflow:hidden}
+.typing{font-size:2em;border-right:2px solid #00ff00;white-space:nowrap;overflow:hidden;animation:blink .7s step-end infinite}
+@keyframes blink{0%,50%,100%{border-color:#0f0}25%,75%{border-color:transparent}}
+.modules{display:flex;gap:20px;margin-top:50px;opacity:0;animation:fadeIn 2s forwards 2s;flex-wrap:wrap;justify-content:center}
+.module{padding:20px 40px;border:2px solid #0f0;border-radius:10px;cursor:pointer;position:relative;overflow:hidden;transition:all .4s}
+.module:hover{box-shadow:0 0 20px #0f0,0 0 40px #0f0;transform:scale(1.05)}
+.module::before{content:"";position:absolute;top:0;left:-100%;width:100%;height:100%;background:rgba(0,255,0,.2);transform:skewX(-20deg);transition:.5s}
+.module:hover::before{left:200%}
+@keyframes fadeIn{to{opacity:1}}
+</style>
+</head>
+<body>
+<div class="typing" id="text"></div>
+<div class="modules" id="mods">
+  <div class="module">Research</div>
+  <div class="module">Systems Thinking</div>
+  <div class="module">Experimentation</div>
+  <div class="module">Projects</div>
+</div>
+<script>
+let txt="ACCESSING RESEARCH_TEAM…",i=0;
+function type(){if(i<txt.length){document.getElementById("text").innerHTML+=txt.charAt(i);i++;setTimeout(type,60)}else{document.getElementById("mods").style.opacity=1}}
+type();
+</script>
+</body>
+</html>
