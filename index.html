@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,13 +8,20 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
 
+/* Body & fonts */
 body{margin:0;padding:0;background:#0d0d0d;color:#00ff99;font-family:'Orbitron',monospace;display:flex;justify-content:center;align-items:center;flex-direction:column;height:100vh;overflow:hidden}
-h1{font-size:2.5em;letter-spacing:2px;opacity:0;animation:fadeIn 2s forwards 0.5s;}
+
+/* Home title */
+h1{font-size:2.5em;letter-spacing:2px;opacity:0;animation:fadeIn 2s forwards 0.5s;text-align:center}
+
+/* Modules */
 .modules{display:flex;gap:25px;margin-top:60px;opacity:0;animation:fadeIn 2s forwards 2s;flex-wrap:wrap;justify-content:center}
 .module{background:rgba(0,255,153,0.05);border:2px solid #00ff99;padding:30px 50px;text-align:center;font-size:1.5em;border-radius:12px;cursor:pointer;position:relative;overflow:hidden;transition:all .4s ease;}
 .module:hover{box-shadow:0 0 25px #00ff99,0 0 50px #00ff99;transform:scale(1.08);}
 .module::before{content:"";position:absolute;top:0;left:-100%;width:100%;height:100%;background:rgba(0,255,153,0.2);transform:skewX(-20deg);transition:.5s;}
 .module:hover::before{left:200%;}
+
+/* Fade animation */
 @keyframes fadeIn{to{opacity:1}}
 
 /* Particle Background */
@@ -27,7 +35,18 @@ h1{font-size:2.5em;letter-spacing:2px;opacity:0;animation:fadeIn 2s forwards 0.5
 .closeBtn{position:absolute;top:20px;right:30px;font-size:2em;cursor:pointer;transition:0.3s;}
 .closeBtn:hover{color:#0f0;}
 .panel h2{font-size:2em;margin-bottom:20px;}
-.panel p{font-size:1.2em;line-height:1.6;}
+
+/* Accordion */
+.accordion-section{margin-bottom:20px;border:1px solid #00ff99;border-radius:8px;overflow:hidden}
+.accordion-header{padding:15px;font-size:1.2em;cursor:pointer;background:rgba(0,255,153,0.05);transition:all .3s}
+.accordion-header:hover{background:rgba(0,255,153,0.15)}
+.accordion-content{max-height:0;padding:0 15px;overflow:hidden;opacity:0;transition:all 0.4s ease}
+.accordion-content p{margin:15px 0;}
+.accordion-section.active .accordion-content{max-height:600px;opacity:1}
+
+/* File / Image placeholders */
+.file-box, .image-box{border:2px dashed #00ff99;padding:15px;margin:10px 0;border-radius:8px;text-align:center;color:#0f0;}
+.file-box:hover, .image-box:hover{background:rgba(0,255,153,0.1);cursor:pointer;}
 </style>
 </head>
 <body>
@@ -46,34 +65,110 @@ h1{font-size:2.5em;letter-spacing:2px;opacity:0;animation:fadeIn 2s forwards 0.5
 <div class="panel" id="researchPanel">
   <span class="closeBtn" onclick="closePanel('researchPanel')">&times;</span>
   <h2>Research</h2>
-  <p>Here you can add your research papers, concepts, and hypotheses. Future uploads and notes will be placed here.</p>
+  <div class="accordion-section">
+    <div class="accordion-header">Papers</div>
+    <div class="accordion-content">
+      <div class="file-box" onclick="viewPDF('research1.pdf')">Click to view PDF</div>
+      <div id="pdfViewer" style="display:none;margin-top:20px;">
+        <iframe id="pdfFrame" src="" width="100%" height="500px"></iframe>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-section">
+    <div class="accordion-header">Notes</div>
+    <div class="accordion-content">
+      <p>Type or paste your research notes here.</p>
+    </div>
+  </div>
+  <div class="accordion-section">
+    <div class="accordion-header">Concepts</div>
+    <div class="accordion-content">
+      <p>Describe frameworks, theories, or high-level concepts.</p>
+      <div class="image-box" onclick="viewImage('concept1.jpg')">Click to view Image</div>
+      <div id="imgViewer" style="display:none;margin-top:20px;text-align:center;">
+        <img id="imgFrame" src="" alt="Preview" style="max-width:90%;border:2px solid #00ff99;border-radius:8px;">
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="panel" id="systemsPanel">
   <span class="closeBtn" onclick="closePanel('systemsPanel')">&times;</span>
   <h2>Systems Thinking</h2>
-  <p>Architecture diagrams, system design logic, and frameworks will appear here.</p>
+  <div class="accordion-section">
+    <div class="accordion-header">Diagrams</div>
+    <div class="accordion-content">
+      <div class="image-box" onclick="viewImage('system1.jpg')">Click to view Image</div>
+      <div id="imgViewer" style="display:none;margin-top:20px;text-align:center;">
+        <img id="imgFrame" src="" alt="Preview" style="max-width:90%;border:2px solid #00ff99;border-radius:8px;">
+      </div>
+    </div>
+  </div>
+  <div class="accordion-section">
+    <div class="accordion-header">Logic & Frameworks</div>
+    <div class="accordion-content">
+      <p>High-level logic, frameworks, and strategies.</p>
+    </div>
+  </div>
 </div>
 
 <div class="panel" id="experimentPanel">
   <span class="closeBtn" onclick="closePanel('experimentPanel')">&times;</span>
   <h2>Experimentation</h2>
-  <p>Document your trials, failures, and iterations. Each experiment can be logged with observations and results.</p>
+  <div class="accordion-section">
+    <div class="accordion-header">Logs</div>
+    <div class="accordion-content">
+      <p>Document each trial, method, and result.</p>
+      <div class="file-box" onclick="viewPDF('experiment1.pdf')">Click to view File</div>
+      <div id="pdfViewer" style="display:none;margin-top:20px;">
+        <iframe id="pdfFrame" src="" width="100%" height="500px"></iframe>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-section">
+    <div class="accordion-header">Observations</div>
+    <div class="accordion-content">
+      <p>Notes and outcomes for each experiment.</p>
+      <div class="image-box" onclick="viewImage('observation1.jpg')">Click to view Image</div>
+      <div id="imgViewer" style="display:none;margin-top:20px;text-align:center;">
+        <img id="imgFrame" src="" alt="Preview" style="max-width:90%;border:2px solid #00ff99;border-radius:8px;">
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="panel" id="projectsPanel">
   <span class="closeBtn" onclick="closePanel('projectsPanel')">&times;</span>
   <h2>Projects / Implementations</h2>
-  <p>Buildathon projects, personal builds, and competitions will be documented here with architecture, approach, and outcomes.</p>
+  <div class="accordion-section">
+    <div class="accordion-header">Buildathon Projects</div>
+    <div class="accordion-content">
+      <p>Record your Buildathon entries with approach, diagrams, and outcomes.</p>
+      <div class="file-box" onclick="viewPDF('buildathon1.pdf')">Click to view File</div>
+      <div id="pdfViewer" style="display:none;margin-top:20px;">
+        <iframe id="pdfFrame" src="" width="100%" height="500px"></iframe>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-section">
+    <div class="accordion-header">Personal Builds</div>
+    <div class="accordion-content">
+      <p>Document personal projects and experiments.</p>
+      <div class="image-box" onclick="viewImage('project1.jpg')">Click to view Image</div>
+      <div id="imgViewer" style="display:none;margin-top:20px;text-align:center;">
+        <img id="imgFrame" src="" alt="Preview" style="max-width:90%;border:2px solid #00ff99;border-radius:8px;">
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-// Typing animation (optional, from previous)
+// Typing animation for home title
 let txt="ACCESSING RESEARCH_TEAM…",i=0;
 function type(){if(i<txt.length){document.getElementById("title").innerHTML+=txt.charAt(i);i++;setTimeout(type,50)}}
 type();
 
-// Panels
+// Panels open/close
 const modules=document.querySelectorAll('.module');
 modules.forEach(mod=>{
   mod.addEventListener('click',()=>{
@@ -82,7 +177,16 @@ modules.forEach(mod=>{
 });
 function closePanel(id){document.getElementById(id).classList.remove('active');}
 
-// Create particles
+// Accordion
+const headers=document.querySelectorAll('.accordion-header');
+headers.forEach(h=>{
+  h.addEventListener('click',()=>{
+    const parent=h.parentElement;
+    parent.classList.toggle('active');
+  });
+});
+
+// Particle background
 const container=document.getElementById('bgParticles');
 for(let i=0;i<80;i++){
   const p=document.createElement('div');
@@ -93,6 +197,21 @@ for(let i=0;i<80;i++){
   p.style.width=(2+Math.random()*3)+'px';
   p.style.height=(2+Math.random()*3)+'px';
   container.appendChild(p);
+}
+
+// PDF/Image viewers
+function viewPDF(url){
+  const pdfViewer = document.getElementById('pdfViewer');
+  const pdfFrame = document.getElementById('pdfFrame');
+  pdfFrame.src = url; 
+  pdfViewer.style.display = 'block';
+}
+
+function viewImage(url){
+  const imgViewer = document.getElementById('imgViewer');
+  const imgFrame = document.getElementById('imgFrame');
+  imgFrame.src = url; 
+  imgViewer.style.display = 'block';
 }
 </script>
 </body>
